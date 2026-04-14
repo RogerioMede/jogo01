@@ -1,0 +1,233 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+int main() {
+    int opcao;
+    int i;
+
+    srand(time(NULL));
+
+    while (1) {
+        printf("\n=== MENU DE JOGOS ===\n");
+        printf("1 - Perguntas e Respostas\n");
+        printf("2 - Cobra na Caixa\n");
+        printf("3 - Gousmas War\n");
+        printf("4 - Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        // ================= JOGO 1 =================
+        if (opcao == 1) {
+            char resposta;
+            char jogar_novamente;
+
+            while (1) {
+                printf("\nBem vindo ao jogo Perguntas e Respostas\n");
+                printf("Digite 0 a qualquer momento para voltar ao menu\n");
+
+                printf("\nQual planeta é conhecido como Planeta Vermelho?\n");
+                printf("a) venus  b) marte  c) jupiter  d) saturno\n");
+                scanf(" %c", &resposta);
+                if (resposta == '0') break;
+                if (resposta == 'b') printf("Resposta correta!\n");
+                else printf("Incorreta! b) marte\n");
+
+                printf("\nQuem foi o primeiro presidente do Brasil?\n");
+                printf("a) Getulio Vargas b) Juscelino Kubitschek c) Deodoro da Fonseca d) Dom Pedro II\n");
+                scanf(" %c", &resposta);
+                if (resposta == '0') break;
+                if (resposta == 'c') printf("Resposta correta!\n");
+                else printf("Incorreta! c) Deodoro da Fonseca\n");
+
+                printf("\nQual é o resultado de 9 x 8?\n");
+                printf("a) 72 b) 81 c) 64 d) 70\n");
+                scanf(" %c", &resposta);
+                if (resposta == '0') break;
+                if (resposta == 'a') printf("Resposta correta!\n");
+                else printf("Incorreta! a) 72\n");
+
+                printf("\nQual é o maior oceano da Terra?\n");
+                printf("a) atlantico b) indico c) artico d) pacifico\n");
+                scanf(" %c", &resposta);
+                if (resposta == '0') break;
+                if (resposta == 'd') printf("Resposta correta!\n");
+                else printf("Incorreta! d) pacifico\n");
+
+                printf("\nQual desses elementos quimicos tem simbolo O?\n");
+                printf("a) ouro b) oxigenio c) prata d) hidrogenio\n");
+                scanf(" %c", &resposta);
+                if (resposta == '0') break;
+                if (resposta == 'b') printf("Resposta correta!\n");
+                else printf("Incorreta! b) oxigenio\n");
+
+                printf("\nFim do jogo! Deseja jogar novamente? (s/n): ");
+                scanf(" %c", &jogar_novamente);
+                if (jogar_novamente == 'n' || jogar_novamente == 'N') break;
+            }
+        }
+
+        // ================= JOGO 2 =================
+        if (opcao == 2) {
+            char *nomes[7] = {"Lucas", "Rafael", "Bianca", "Camila", "Gustavo", "Fernanda", "Diego"};
+            char nome_jogador1[20], nome_jogador2[20];
+            int caixas[5];
+            int jogador_atual, escolha, jogo_rodando;
+            int escolha_j1, escolha_j2;
+            int posicao_botao, posicao_cobra;
+            char jogar_novamente;
+
+            while (1) {
+                printf("\nBem-vindo a Cobra na Caixa!\n");
+
+                printf("\nEscolha seu nome para Jogador 1:\n");
+                for (i = 0; i < 7; i++) {
+                    printf("%d. %s\n", i + 1, nomes[i]);
+                }
+
+                scanf("%d", &escolha_j1);
+                if (escolha_j1 == 0) break;
+
+                while (escolha_j1 < 1 || escolha_j1 > 7) {
+                    printf("Escolha invalida! Tente novamente: ");
+                    scanf("%d", &escolha_j1);
+                }
+
+                strcpy(nome_jogador1, nomes[escolha_j1 - 1]);
+
+                printf("\nEscolha seu nome para Jogador 2:\n");
+                for (i = 0; i < 7; i++) {
+                    printf("%d. %s\n", i + 1, nomes[i]);
+                }
+
+                scanf("%d", &escolha_j2);
+                if (escolha_j2 == 0) break;
+
+                while (escolha_j2 < 1 || escolha_j2 > 7) {
+                    printf("Escolha invalida! Tente novamente: ");
+                    scanf("%d", &escolha_j2);
+                }
+
+                strcpy(nome_jogador2, nomes[escolha_j2 - 1]);
+
+                jogo_rodando = 1;
+                jogador_atual = rand() % 2 + 1;
+
+                while (jogo_rodando) {
+
+                    for (i = 0; i < 5; i++) {
+                        caixas[i] = 0;
+                    }
+
+                    posicao_botao = rand() % 5;
+                    caixas[posicao_botao] = 1;
+
+                    do {
+                        posicao_cobra = rand() % 5;
+                    } while (posicao_cobra == posicao_botao);
+
+                    caixas[posicao_cobra] = 2;
+
+                    printf("\nVez de %s. Escolha uma caixa (1-5) ou 0 para sair: ",
+                           jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
+
+                    scanf("%d", &escolha);
+
+                    if (escolha == 0) break;
+
+                    if (escolha < 1 || escolha > 5) {
+                        printf("Escolha invalida!\n");
+                    } else {
+                        if (caixas[escolha - 1] == 0) {
+                            printf("Caixa vazia. Proximo jogador!\n");
+                        } else if (caixas[escolha - 1] == 1) {
+                            printf("%s encontrou o botao! Voce venceu!\n",
+                                   jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
+                            jogo_rodando = 0;
+                        } else {
+                            printf("%s encontrou a cobra! Voce perdeu!\n",
+                                   jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
+                            jogo_rodando = 0;
+                        }
+
+                        if (jogo_rodando) {
+                            jogador_atual = (jogador_atual == 1) ? 2 : 1;
+                        }
+                    }
+                }
+
+                printf("\nFim do jogo! Deseja jogar novamente? (s/n): ");
+                scanf(" %c", &jogar_novamente);
+                if (jogar_novamente == 'n' || jogar_novamente == 'N') break;
+            }
+        }
+
+        // ================= JOGO 3 =================
+        if (opcao == 3) {
+            int furia1_j1, furia2_j1;
+            int furia1_j2, furia2_j2;
+            int viva1_j1, viva2_j1;
+            int viva1_j2, viva2_j2;
+            int num_gousmas_j1, num_gousmas_j2;
+            int turno, escolha, gousma, alvo;
+            char jogar_novamente;
+
+            while (1) {
+                furia1_j1 = 1; furia2_j1 = 1;
+                furia1_j2 = 1; furia2_j2 = 1;
+                viva1_j1 = 1; viva2_j1 = 1;
+                viva1_j2 = 1; viva2_j2 = 1;
+                num_gousmas_j1 = 2; num_gousmas_j2 = 2;
+                turno = 1;
+
+                printf("\nJogo das Gousmas comecou!\n");
+
+                while (num_gousmas_j1 > 0 && num_gousmas_j2 > 0) {
+
+                    printf("\nTurno J%d\n", turno);
+                    printf("1 - Atacar 2 - Dividir 9 - Pausar\n");
+                    scanf("%d", &escolha);
+
+                    if (escolha == 9) {
+                        int pausa;
+                        printf("\n=== PAUSADO ===\n");
+                        printf("1 - Continuar\n");
+                        printf("2 - Voltar ao menu\n");
+                        scanf("%d", &pausa);
+
+                        if (pausa == 2) break;
+                        else continue;
+                    }
+
+                    if (escolha == 1) {
+                        printf("Gousma (1 ou 2, 0 sair): ");
+                        scanf("%d", &gousma);
+                        if (gousma == 0) break;
+
+                        printf("Alvo (1 ou 2, 0 sair): ");
+                        scanf("%d", &alvo);
+                        if (alvo == 0) break;
+                    }
+
+                    turno = (turno == 1) ? 2 : 1;
+                }
+
+                printf("\nQuer jogar novamente? (s/n): ");
+                scanf(" %c", &jogar_novamente);
+                if (jogar_novamente == 'n' || jogar_novamente == 'N') break;
+            }
+        }
+
+        if (opcao == 4) {
+            printf("Obrigado por jogar!\n");
+            return 0;
+        }
+
+        if (opcao < 1 || opcao > 4) {
+            printf("Opcao invalida!\n");
+        }
+    }
+
+    return 0;
+}
