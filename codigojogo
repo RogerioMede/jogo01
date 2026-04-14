@@ -34,19 +34,19 @@ int main() {
                 if (resposta == 'b') printf("Resposta correta!\n");
                 else printf("Incorreta! b) marte\n");
 
-                printf("\nQuem foi o primeiro presidente do Brasil?\n");
-                printf("a) Getulio Vargas b) Juscelino Kubitschek c) Deodoro da Fonseca d) Dom Pedro II\n");
+                printf("\nQual destes pontos turisticos e um dos mais famosos de Belem do Para?\n");
+                printf("a) Elevador Lacerdas b) Cristo Redentor c) Ver-o-Peso d) Pelourinho\n");
                 scanf(" %c", &resposta);
                 if (resposta == '0') break;
                 if (resposta == 'c') printf("Resposta correta!\n");
-                else printf("Incorreta! c) Deodoro da Fonseca\n");
+                else printf("Incorreta! c) Ver-o-Peso\n");
 
-                printf("\nQual e o resultado de 9 x 8?\n");
-                printf("a) 72 b) 81 c) 64 d) 70\n");
+                printf("\nQual prato tipico e muito consumido em Belem do Para?\n");
+                printf("a) Tacaca b) Feijoada c) Churrasco gaucho d) Pizza\n");
                 scanf(" %c", &resposta);
                 if (resposta == '0') break;
                 if (resposta == 'a') printf("Resposta correta!\n");
-                else printf("Incorreta! a) 72\n");
+                else printf("Incorreta! a) tacaca\n");
 
                 printf("\nQual e o maior oceano da Terra?\n");
                 printf("a) atlantico b) indico c) artico d) pacifico\n");
