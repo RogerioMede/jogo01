@@ -18,7 +18,7 @@ int main() {
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
-        // ================= JOGO 1 =================
+        // ================= JOGO 1: PERGUNTAS E RESPOSTAS =================
         if (opcao == 1) {
             char resposta;
             char jogar_novamente;
@@ -27,7 +27,7 @@ int main() {
                 printf("\nBem vindo ao jogo Perguntas e Respostas\n");
                 printf("Digite 0 a qualquer momento para voltar ao menu\n");
 
-                printf("\nQual planeta é conhecido como Planeta Vermelho?\n");
+                printf("\nQual planeta e conhecido como Planeta Vermelho?\n");
                 printf("a) venus  b) marte  c) jupiter  d) saturno\n");
                 scanf(" %c", &resposta);
                 if (resposta == '0') break;
@@ -41,14 +41,14 @@ int main() {
                 if (resposta == 'c') printf("Resposta correta!\n");
                 else printf("Incorreta! c) Deodoro da Fonseca\n");
 
-                printf("\nQual é o resultado de 9 x 8?\n");
+                printf("\nQual e o resultado de 9 x 8?\n");
                 printf("a) 72 b) 81 c) 64 d) 70\n");
                 scanf(" %c", &resposta);
                 if (resposta == '0') break;
                 if (resposta == 'a') printf("Resposta correta!\n");
                 else printf("Incorreta! a) 72\n");
 
-                printf("\nQual é o maior oceano da Terra?\n");
+                printf("\nQual e o maior oceano da Terra?\n");
                 printf("a) atlantico b) indico c) artico d) pacifico\n");
                 scanf(" %c", &resposta);
                 if (resposta == '0') break;
@@ -68,7 +68,7 @@ int main() {
             }
         }
 
-        // ================= JOGO 2 =================
+        // ================= JOGO 2: COBRA NA CAIXA =================
         if (opcao == 2) {
             char *nomes[7] = {"Lucas", "Rafael", "Bianca", "Camila", "Gustavo", "Fernanda", "Diego"};
             char nome_jogador1[20], nome_jogador2[20];
@@ -82,77 +82,59 @@ int main() {
                 printf("\nBem-vindo a Cobra na Caixa!\n");
 
                 printf("\nEscolha seu nome para Jogador 1:\n");
-                for (i = 0; i < 7; i++) {
-                    printf("%d. %s\n", i + 1, nomes[i]);
-                }
-
+                for (i = 0; i < 7; i++) printf("%d. %s\n", i + 1, nomes[i]);
                 scanf("%d", &escolha_j1);
                 if (escolha_j1 == 0) break;
-
                 while (escolha_j1 < 1 || escolha_j1 > 7) {
-                    printf("Escolha invalida! Tente novamente: ");
-                    scanf("%d", &escolha_j1);
+                    printf("Escolha invalida! Tente novamente: "); scanf("%d", &escolha_j1);
                 }
-
                 strcpy(nome_jogador1, nomes[escolha_j1 - 1]);
 
                 printf("\nEscolha seu nome para Jogador 2:\n");
-                for (i = 0; i < 7; i++) {
-                    printf("%d. %s\n", i + 1, nomes[i]);
-                }
-
+                for (i = 0; i < 7; i++) printf("%d. %s\n", i + 1, nomes[i]);
                 scanf("%d", &escolha_j2);
                 if (escolha_j2 == 0) break;
-
                 while (escolha_j2 < 1 || escolha_j2 > 7) {
-                    printf("Escolha invalida! Tente novamente: ");
-                    scanf("%d", &escolha_j2);
+                    printf("Escolha invalida! Tente novamente: "); scanf("%d", &escolha_j2);
                 }
-
                 strcpy(nome_jogador2, nomes[escolha_j2 - 1]);
 
                 jogo_rodando = 1;
                 jogador_atual = rand() % 2 + 1;
 
+               
+                for (i = 0; i < 5; i++) caixas[i] = 0;
+                
+                posicao_botao = rand() % 5;
+                caixas[posicao_botao] = 1;
+
+                do {
+                    posicao_cobra = rand() % 5;
+                } while (posicao_cobra == posicao_botao);
+                caixas[posicao_cobra] = 2;
+
                 while (jogo_rodando) {
-
-                    for (i = 0; i < 5; i++) {
-                        caixas[i] = 0;
-                    }
-
-                    posicao_botao = rand() % 5;
-                    caixas[posicao_botao] = 1;
-
-                    do {
-                        posicao_cobra = rand() % 5;
-                    } while (posicao_cobra == posicao_botao);
-
-                    caixas[posicao_cobra] = 2;
-
-                    printf("\nVez de %s. Escolha uma caixa (1-5) ou 0 para sair: ",
-                           jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
-
+                    printf("\nVez de %s. Escolha uma caixa (1-5) ou 0 para sair: ", jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
                     scanf("%d", &escolha);
 
                     if (escolha == 0) break;
 
                     if (escolha < 1 || escolha > 5) {
                         printf("Escolha invalida!\n");
+                    } else if (caixas[escolha - 1] == 3) {
+
+                        printf("Essa caixa ja esta aberta! Escolha outra.\n");
                     } else {
                         if (caixas[escolha - 1] == 0) {
                             printf("Caixa vazia. Proximo jogador!\n");
-                        } else if (caixas[escolha - 1] == 1) {
-                            printf("%s encontrou o botao! Voce venceu!\n",
-                                   jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
-                            jogo_rodando = 0;
-                        } else {
-                            printf("%s encontrou a cobra! Voce perdeu!\n",
-                                   jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
-                            jogo_rodando = 0;
-                        }
-
-                        if (jogo_rodando) {
+                            caixas[escolha - 1] = 3;
                             jogador_atual = (jogador_atual == 1) ? 2 : 1;
+                        } else if (caixas[escolha - 1] == 1) {
+                            printf(">>> %s encontrou o botao! Voce venceu! <<<\n", jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
+                            jogo_rodando = 0;
+                        } else if (caixas[escolha - 1] == 2) {
+                            printf(">>> %s encontrou a cobra! Voce perdeu! <<<\n", jogador_atual == 1 ? nome_jogador1 : nome_jogador2);
+                            jogo_rodando = 0;
                         }
                     }
                 }
@@ -163,54 +145,78 @@ int main() {
             }
         }
 
-        // ================= JOGO 3 =================
+        // ================= JOGO 3: GOUSMAS WAR =================
         if (opcao == 3) {
-            int furia1_j1, furia2_j1;
-            int furia1_j2, furia2_j2;
-            int viva1_j1, viva2_j1;
-            int viva1_j2, viva2_j2;
-            int num_gousmas_j1, num_gousmas_j2;
-            int turno, escolha, gousma, alvo;
+            int f[2][2]; 
+            int turno, escolha, gousma, alvo, qtd;
             char jogar_novamente;
 
             while (1) {
-                furia1_j1 = 1; furia2_j1 = 1;
-                furia1_j2 = 1; furia2_j2 = 1;
-                viva1_j1 = 1; viva2_j1 = 1;
-                viva1_j2 = 1; viva2_j2 = 1;
-                num_gousmas_j1 = 2; num_gousmas_j2 = 2;
-                turno = 1;
+               
+                f[0][0] = 1; f[0][1] = 1; 
+                f[1][0] = 1; f[1][1] = 1; 
+                turno = 0; 
 
                 printf("\nJogo das Gousmas comecou!\n");
 
-                while (num_gousmas_j1 > 0 && num_gousmas_j2 > 0) {
+               
+                while ((f[0][0] <= 5 || f[0][1] <= 5) && (f[1][0] <= 5 || f[1][1] <= 5)) {
+                    int inimigo = (turno == 0) ? 1 : 0;
 
-                    printf("\nTurno J%d\n", turno);
-                    printf("1 - Atacar 2 - Dividir 9 - Pausar\n");
+                    printf("\n--------------------------\n");
+                    printf("J1: Gousma1[%s] Gousma2[%s]\n", f[0][0] > 5 ? "X" : "A", f[0][1] > 5 ? "X" : "A");
+                    printf("J2: Gousma1[%s] Gousma2[%s]\n", f[1][0] > 5 ? "X" : "A", f[1][1] > 5 ? "X" : "A");
+                    printf("Furia Atual -> J1:(%d, %d) | J2:(%d, %d)\n", f[0][0], f[0][1], f[1][0], f[1][1]);
+                    
+                    printf("\nTurno J%d\n", turno + 1);
+                    printf("1 - Atacar | 2 - Dividir | 9 - Sair\nEscolha: ");
                     scanf("%d", &escolha);
 
-                    if (escolha == 9) {
-                        int pausa;
-                        printf("\n=== PAUSADO ===\n");
-                        printf("1 - Continuar\n");
-                        printf("2 - Voltar ao menu\n");
-                        scanf("%d", &pausa);
-
-                        if (pausa == 2) break;
-                        else continue;
-                    }
+                    if (escolha == 9) break;
 
                     if (escolha == 1) {
-                        printf("Gousma (1 ou 2, 0 sair): ");
-                        scanf("%d", &gousma);
-                        if (gousma == 0) break;
+                        
+                        printf("Sua Gousma (1 ou 2): "); scanf("%d", &gousma);
+                        printf("Alvo Inimigo (1 ou 2): "); scanf("%d", &alvo);
+                        gousma--; alvo--;
 
-                        printf("Alvo (1 ou 2, 0 sair): ");
-                        scanf("%d", &alvo);
-                        if (alvo == 0) break;
+                        if (f[turno][gousma] > 5 || f[inimigo][alvo] > 5) {
+                            printf("Erro: Nao pode usar/atacar Gousma destruida!\n");
+                            continue; 
+                        }
+
+                        f[inimigo][alvo] += f[turno][gousma]; 
+                        printf("Ataque realizado! Furia do alvo subiu.\n");
+                        if(f[inimigo][alvo] > 5) printf("Gousma inimiga DESTRUIDA!\n");
+
+                    } else if (escolha == 2) {
+                        
+                        printf("Tirar de qual Gousma sua (1 ou 2): "); scanf("%d", &gousma);
+                        printf("Quanto transferir: "); scanf("%d", &qtd);
+                        gousma--; 
+                        int para = (gousma == 0) ? 1 : 0;
+
+                        if (f[turno][gousma] > 5 || qtd >= f[turno][gousma] || qtd < 1) {
+                            printf("Erro: Divisao invalida!\n");
+                            continue;
+                        }
+
+                        f[turno][gousma] -= qtd;
+                        f[turno][para] = (f[turno][para] > 5) ? qtd : f[turno][para] + qtd;
+                        printf("Divisao realizada!\n");
+                        if(f[turno][para] > 5) printf("Mas a receptora explodiu (passou de 5)!\n");
+
+                    } else {
+                        printf("Opcao invalida.\n"); continue;
                     }
 
-                    turno = (turno == 1) ? 2 : 1;
+                    
+                    if (f[inimigo][0] > 5 && f[inimigo][1] > 5) {
+                        printf("\n>>> FIM DE JOGO! Jogador %d venceu! <<<\n", turno + 1);
+                        break;
+                    }
+
+                    turno = (turno == 0) ? 1 : 0; 
                 }
 
                 printf("\nQuer jogar novamente? (s/n): ");
@@ -223,11 +229,9 @@ int main() {
             printf("Obrigado por jogar!\n");
             return 0;
         }
-
         if (opcao < 1 || opcao > 4) {
             printf("Opcao invalida!\n");
         }
     }
-
     return 0;
 }
